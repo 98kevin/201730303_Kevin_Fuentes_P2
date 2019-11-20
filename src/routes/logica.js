@@ -73,7 +73,7 @@ function declaration (token , linea, tieneError) {
 	 if (token == -1){
 		token = getNextToken(linea);
 		
-		if (token != 31){		
+		if (token != 45){		
 			if (token != null) columna = tablaTokens[linea.value][3];
 			else columna = tablaTokens[linea.value-1][3];
 			
@@ -103,10 +103,10 @@ function declaration (token , linea, tieneError) {
 function assignment_expression (token , linea, tieneError) {
 	 token = getNextToken(linea);
 	 	 
-	 //Se é um sinal de atribução =
+	 //Si es un signo igual 
 	 if (token == 2){
 		token = getNextToken(linea);
-		assignment_expression_prime(token , linea, tieneError);		
+		expresion_de_asignacion_primera(token , linea, tieneError);		
 		
 	 } else {
 		descripcionDelError = "Asignación incorrecta! Después de que un identificador debe contener un signo de asignación";
@@ -147,13 +147,15 @@ function operacion_aritmetica (token , linea, tieneError) {
 	 }
 }
 
-/***
- * Função 
- * author:
+/**
+ * Evalua que lo primero de una expesion se correcto. 
+ * @param {*} token 
+ * @param {*} linea 
+ * @param {*} tieneError 
  */
-function assignment_expression_prime (token , linea, tieneError) {
+function expresion_de_asignacion_primera (token , linea, tieneError) {
 	
-	//Literales
+	//Commillas o comillas simples
     if (token == 37 || token == 38){
 		token = getNextToken(linea);
 		
@@ -214,7 +216,7 @@ function imprimir_statement (token , linea, tieneError) {
  * Função que verifica se e uma expressao de comparacao ou uma expressao logica entre um identificador e/ou uma constante
  * author: Isabella
  */
-function expression (token, linea, tieneError) {
+function expresion (token, linea, tieneError) {
 	if (token == -1 || token == -2){	// si y un identificador o una constante
 		token = getNextToken(linea);		
 		if (token >= 3 && token <= 10)	{	// si eres un operador de comparación (<, >, <=, >=, ==, !=, ||, &&)
@@ -254,7 +256,7 @@ function expression (token, linea, tieneError) {
  * 
  * 
  */
-function code_snippet (token, linea, tieneError) {
+function fragmento_de_codigo (token, linea, tieneError) {
 	var lineaAnterior = linea.value;	
 	while (token != 33 && token != null) {						// La negación debe hacerse a continuación:	
 		if (token == 20 || token == 21){						
@@ -262,7 +264,7 @@ function code_snippet (token, linea, tieneError) {
 			if (token != 31) {
 				linea.value--
 				coumna = tablaTokens[linea.value][3] + 1;
-				descripcionDelError = "Deve haver um ponto e virgula depois do statement";
+				descripcionDelError = "Debe haber un punto y coma despues de la sentencia";
 				insertarEnTablaDeErrores(tablaErroresSintaticos, descripcionDelError, tablaTokens[linea.value][2], coumna);	
 				linea.value++
 				tieneError.value = 1;
@@ -293,13 +295,13 @@ function mientras_statement (token , linea, tieneError) {
 
 	 if (token == 34) {	// Se abre parentesis
 	 	token = getNextToken(linea);
-	 	expression(token , linea, tieneError);
+	 	expresion(token , linea, tieneError);
 	 	token = getNextToken(linea);
-	 	if (token == 35) {		// Se fecha parentesis
+	 	if (token == 35) {		// Se cierran parentesis
 	 		token = getNextToken(linea);
 	 		if (token == 32){	// Se abre llave
 	 			token = getNextToken(linea);
-	 			code_snippet(token , linea, tieneError);	// fecha llave dentro do code_snippet
+	 			fragmento_de_codigo(token , linea, tieneError);	// fecha llave dentro do code_snippet
 	 			token = getNextToken(linea);
 			} else {
 				descripcionDelError = " Despues de la expresion, abrir la llave";
@@ -307,7 +309,7 @@ function mientras_statement (token , linea, tieneError) {
 				tieneError.value = 1;
 	 		}
 	 	} else {
-			descripcionDelError = "Debe cerrar los paréntesis después de una expresión..";
+			descripcionDelError = "Debe cerrar los paréntesis después de una expresión";
 			insertarEnTablaDeErrores(tablaErroresSintaticos, descripcionDelError, tablaTokens[linea.value][2], tablaTokens[linea.value][3]);
 			tieneError.value = 1;
  		}
@@ -319,15 +321,16 @@ function mientras_statement (token , linea, tieneError) {
 	}
 }
 
-/***
- * Função que trata o if
- * author: Isabella e Monica
- * TODO: Nao pode vir else antes de else if
+/**
+ * Funcion encargada de tratar un if
+ * @param {*} token 
+ * @param {*} linea 
+ * @param {*} tieneError 
  */
 function if_statement_linea (token , linea, tieneError) {
 	if (token == 32){	// Se abre llave
 		token = getNextToken(linea);
-		code_snippet(token , linea, tieneError);	// fecha llave dentro do code_snippet
+		fragmento_de_codigo(token , linea, tieneError);	// fecha llave dentro do code_snippet
 		token = getNextToken(linea);
 	} else {
 		descripcionDelError = " Después de la expresión, abra la llave.";
@@ -337,34 +340,35 @@ function if_statement_linea (token , linea, tieneError) {
 }
 
 
-/***
- * Função que trata o if
- * author: Isabella e Monica
- * TODO: Nao pode vir else antes de else if
+/**
+ * Funcion engargada de tratar un bloque if
+ * @param {*} token 
+ * @param {*} linea 
+ * @param {*} tieneError 
  */
 function if_statement (token , linea, tieneError) {
 	token = getNextToken(linea);
 
-	if (token == 34) {	// Se abre parentesis
+	if (token == 34) {	// Se abren parentesis
 	 	token = getNextToken(linea);
-	 	expression(token , linea, tieneError);
+	 	expresion(token , linea, tieneError);
 	 	token = getNextToken(linea);
-	 	if (token == 35) {		// Se fecha parentesis
+	 	if (token == 35) {		// Se cierran parentesis
 	 		token = getNextToken(linea);
 	 		if (token == 32){	// Se abre llave
 	 			token = getNextToken(linea);
-	 			code_snippet(token , linea, tieneError);	// fecha llave dentro do code_snippet
+	 			fragmento_de_codigo(token , linea, tieneError);	// Cerrar llave dentro de un bloque de codigo
 	 			token = getNextToken(linea);
-			 	if (token == 19) {	// Se e else
+			 	if (token == 19) {	// si o else
 					token = getNextToken(linea);
-					if (token == 18){		//se for if
+					if (token == 18){		//si for o un if
 						if_statement (token , linea, tieneError);
 					} else {
 						 if_statement_linea (token , linea, tieneError) 
 					}
 	 			} 
 	 		} else {
-				descripcionDelError = " Después de la expresión, abra la llave.";
+				descripcionDelError = " Después de una expresion, abrir una llave.";
 				insertarEnTablaDeErrores(tablaErroresSintaticos, descripcionDelError, tablaTokens[linea.value][2], tablaTokens[linea.value][3]);
 				tieneError.value = 1;
 	 		}
@@ -380,21 +384,21 @@ function if_statement (token , linea, tieneError) {
 	}
 }
 
-/***
- * 
+/**
+ * Muestra el codigo compilado en un div
  */
 function exhibirCodigoCompilado() {
 	codigoCompilado = codigoCompilado.concat("</tr></table>");
 	var divCodigoCompilado = document.getElementById('codigoCompilado');
 	divCodigoCompilado.innerHTML = codigoCompilado;
-	divCodigoCompilado.classList.remove("ocultar-div");  //le quitamos la clase que la
-}
+	divCodigoCompilado.classList.remove("ocultar-div");  //le quitamos la clase que oculta el div
 
-/***
- * Função 
- * author:
+
+/**
+ * Evalua una sentencia de codigo y la manda a evaluar especificamente a cada bloque
+ * @param {*} token 
+ * @param {*} linea 
  */
-
 function statement (token, linea) {
 	 var tieneError = {value: 0}; //mapa de errores
 
@@ -429,11 +433,9 @@ function statement (token, linea) {
 	 }
 }
 
-/***
- * Função 
- * author:
+/**
+ * 
  */
-
 function sintatico () {
 	var linea = {value: 0};	
 	var token;
@@ -449,17 +451,17 @@ function sintatico () {
 
 
 
-/***
- * Função main: função principal tratando cada caso de token
- * author: Isabella e Monica
+/**
+ * Funcion principal para tratar cada caso de token
+ * @param {*} archivo 
  */
 function main (archivo) {
 	
-	var lineasDelArchivo = archivo.length;							// Numero de lineas do archivo de entrada
-	var vigilante = {value: 0};										// Primer Caracter leido
-	var visorAFuturo = {value: 1};									// Puntero para leer cada token
-	var flag; 														// Variable para retorno de error
-	var retorno;													// Array de funciones de retorno
+	var lineasDelArchivo = archivo.length;								// Numero de lineas do archivo de entrada
+	var vigilante = {value: 0};											// Primer Caracter leido
+	var visorAFuturo = {value: 1};										// Puntero para leer cada token
+	var bandera; 														// Variable para saber si hubieron erroes
+	var retorno;														// Array de funciones de retorno
 	
 	//Creación de tabla
 	retorno = crearTablas(tablaIdentificadores, tablaTokens, tablaLiterales, tablaConstantes, 
@@ -486,7 +488,7 @@ function main (archivo) {
 					archivo[lineaActual][vigilante.value] == '\t'|| 
 					archivo[lineaActual][vigilante.value] == '\n') {
 						
-					consumirEspacos(archivo[lineaActual], vigilante, visorAFuturo);
+					consumirEspacios(archivo[lineaActual], vigilante, visorAFuturo);
 				}
 				
 				if (archivo[lineaActual][vigilante.value] != undefined) { 
@@ -527,7 +529,7 @@ function main (archivo) {
 						lineaActual);		
 
 					} else {			
-						var descripcionDelError = "Ooops! Isso eu não conheço! Você pode verificar o erro pra mim!?";
+						var descripcionDelError = "No se pudo detectar el error. ";
 						insertarEnTablaDeErrores (tablaErroresLexicos, descripcionDelError, lineaActual, vigilante.value);
 						vigilante.value = archivo[lineaActual].length + 1;
 					}
@@ -538,9 +540,6 @@ function main (archivo) {
 		}//end While
 	}//end for
 
-	var divDownload = document.getElementById('botao-download-div');
-	divDownload.classList.remove("ocultar-div");	
-
 	sintatico ();
 	
 	exibirTablas(tablaTokens, tablaConstantes, tablaLiterales, tablaIdentificadores,tablaErroresLexicos);
@@ -548,4 +547,4 @@ function main (archivo) {
 
 }//End main
 
-
+}

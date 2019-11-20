@@ -1,30 +1,32 @@
-/***
- * Função crearTablas: a função inicializa as tablas do código intermediário para 
- * serem retornadas pelo analisador léxico.
- * @param: tablaIdentificadores, tablaDelimitadores, tablaLiterales, 
- * 		   tablaTokens, tablaCodigos, tablaConstantes
- * author: Isabella e Monica
+/**
+ * inicializa tablas de códigos intermedios para
+  devuelto por el analizador léxico.
+ * @param {*} tablaIdentificadores 
+ * @param {*} tablaTokens 
+ * @param {*} tablaLiterales 
+ * @param {*} tablaConstantes 
+ * @param {*} tablaErroresLexicos 
  */
 function crearTablas(tablaIdentificadores, tablaTokens, tablaLiterales, tablaConstantes, 
     tablaErroresLexicos) {
         var retorno = new Array();
     
-        // Inicialização da matriz de tablaIdentificadores
+        // Inicializacion de matriz de tablaIdentificadores
         tablaIdentificadores = new Array();
         
-        // Inicialização da matriz de tabla unica
+        // Inicializacion de matriz de tabla unica
         tablaTokens = new Array();
     
-        // Inicialização da matriz de tablaLiterales
+        // Inicializacion de matriz de tablaLiterales
         tablaLiterales = new Array();
         
-        // Inicialização da matriz de constantes
+        // Inicializacion de matriz de constantes
         tablaConstantes = new Array();
         
-        // Inicialização da matriz de erros lexicos
+        // Inicializacion de matriz de errores lexicos
         tablaErroresLexicos = new Array();
         
-        // Inicialização da matriz de erros sintaticos
+        // Inicializacion de matriz de errores sintaticos
         tablaErroresSintaticos = new Array();
         
         retorno[0] = tablaIdentificadores;
@@ -37,18 +39,14 @@ function crearTablas(tablaIdentificadores, tablaTokens, tablaLiterales, tablaCon
         return retorno;
     }
 
-
-
-
-/**
- * Função inserirToken: insere um novo token na tabla unica.
- * @params:	tablaTokens (tabla unica)
- * 			idToken 	(codigo definido para o token)
- * 			linea 		(linea do token no codigo)
- * 			coluna		(coluna do token no codigo)
- * 			ponteiro 	(ponteiro para a tabla auxiliar referente) == -1 se nao tem tabla referente
- * author: Isabella e Monica
- */
+ /**
+  * inserta un nuevo token en la tabla unica.
+  * @param {*} tablaTokens tabla unica
+  * @param {*} idToken codigo definido para un token 
+  * @param {*} lineaCodigo linea token en código
+  * @param {*} colunaCodigo columna del token en codigo
+  * @param {*} ponteiro (puntero a la tabla auxiliar de referencia) == -1 si no hay tabla de referencia
+  */
 function inserirTablaTokens(tablaTokens, idToken, lineaCodigo, colunaCodigo, ponteiro){
 	var idLinea = tablaTokens.length;
 	
@@ -62,8 +60,11 @@ function inserirTablaTokens(tablaTokens, idToken, lineaCodigo, colunaCodigo, pon
 }
 
 /**
- * Função inserirTablaLiterales: insere um novo token na tabla de literais
- * author: Isabella e Monica
+ * Inserta un nuevo token en la tabla de literales
+ * @param {*} tablaLiterales 
+ * @param {*} literal 
+ * @param {*} lineaCodigo 
+ * @param {*} colunaCodigo 
  */
 function inserirTablaLiterales(tablaLiterales, literal, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaLiterales.length;
@@ -78,8 +79,11 @@ function inserirTablaLiterales(tablaLiterales, literal, lineaCodigo, colunaCodig
 }
 
 /**
- * Função inserirTablaIdentificadores: insere um novo token na tabla de identificadores
- * author: Isabella e Monica
+ * Inserta un nuevo token en la tabla de indentificadores
+ * @param {*} tablaIdentificadores 
+ * @param {*} nomeIdentificador 
+ * @param {*} lineaCodigo 
+ * @param {*} colunaCodigo 
  */
 function inserirTablaIdentificadores(tablaIdentificadores, nomeIdentificador, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaIdentificadores.length;
@@ -108,8 +112,11 @@ function inserirTablaIdentificadores(tablaIdentificadores, nomeIdentificador, li
 }
 
 /**
- * Função inserirTablaConstantes: insere um novo token na tabla de constantes
- * author: Isabella e Monica
+ * Inserta un nuevo token la tabla de constantes
+ * @param {*} tablaConstantes 
+ * @param {*} constante 
+ * @param {*} lineaCodigo 
+ * @param {*} colunaCodigo 
  */
 function inserirTablaConstantes(tablaConstantes, constante, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaConstantes.length;
@@ -124,8 +131,11 @@ function inserirTablaConstantes(tablaConstantes, constante, lineaCodigo, colunaC
 
 
 /**
- * Função inserirtablaErrores: insere o erro na tabla de erros
- * author: Isabella e Monica
+ * Inserta un nuevo token en la tabla de errores
+ * @param {*} tablaErrores 
+ * @param {*} descripcionDelError 
+ * @param {*} lineaCodigo 
+ * @param {*} colunaCodigo 
  */
 function inserirtablaErrores(tablaErrores, descripcionDelError, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaErrores.length;
@@ -139,8 +149,13 @@ function inserirtablaErrores(tablaErrores, descripcionDelError, lineaCodigo, col
 }
 
 
-/***
- * author: Monica
+/**
+ * 
+ * @param {*} tablaTokens 
+ * @param {*} tablaConstantes 
+ * @param {*} tablaLiterales 
+ * @param {*} tablaIdentificadores 
+ * @param {*} tablaErroresLexicos 
  */
 function exibirTablas(tablaTokens, tablaConstantes, tablaLiterales, tablaIdentificadores, tablaErroresLexicos){
 	var mensaje = "";
@@ -166,7 +181,7 @@ function exibirTablas(tablaTokens, tablaConstantes, tablaLiterales, tablaIdentif
 	}
 	
 	div = "<h5>Tabla de Literales</h5>";
-	div = div + "<table class='table'><thead><tr><th>id</th><th>Literal</th><th>Linea</th><th>Coluna</th></tr></thead><tbody>";
+	div = div + "<table class='table'><thead><tr><th>id</th><th>Literal</th><th>Linea</th><th>Columna</th></tr></thead><tbody>";
 	
 	if (tablaLiterales.length > 0) {
 		for(var i = 0; i < tablaLiterales.length; i++) {

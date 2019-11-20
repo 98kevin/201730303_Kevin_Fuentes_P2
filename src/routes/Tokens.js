@@ -28,7 +28,7 @@ function download_tabelas() {
  * @params:	linhaDoArquivo, sentinela, lookAhead
  * author: 	Monica
  */
-function consumirEspacos(linhaDoArquivo, sentinela, lookAhead){
+function consumirEspacios(linhaDoArquivo, sentinela, lookAhead){
 	var newSentinela = sentinela.value;
 	
 	//Consumindo espaços e tabs
@@ -80,7 +80,7 @@ function tratarDelimitadores (tabelaTokens, arquivoLinhaAtual, linhaAtual, senti
 	inserirTabelaTokens(tabelaTokens, idDelimitador, linhaAtual, sentinela.value, -1);
 	sentinela.value = lookAhead.value;
 	lookAhead.value = lookAhead.value + 1;
-	consumirEspacos(arquivoLinhaAtual, sentinela, lookAhead);
+	consumirEspacios(arquivoLinhaAtual, sentinela, lookAhead);
 }
 
 /***
@@ -97,7 +97,7 @@ function tratarAtribuicao (tabelaTokens, arquivoLinhaAtual, linhaAtual, sentinel
 	inserirTabelaTokens(tabelaTokens, idDelimitador, linhaAtual, sentinela.value, -1);
 	sentinela.value = lookAhead.value;
 	lookAhead.value = lookAhead.value + 1;
-	consumirEspacos(arquivoLinhaAtual, sentinela, lookAhead);
+	consumirEspacios(arquivoLinhaAtual, sentinela, lookAhead);
 }
 
 /***
@@ -132,7 +132,7 @@ function tratarLiteral (tabelaTokens, tabelaLiterais, tabelaErrosLexicos, arquiv
 		
 		sentinela.value = lookAhead.value + 1;
 		lookAhead.value = lookAhead.value + 2;
-		consumirEspacos(arquivoLinhaAtual, sentinela, lookAhead);
+		consumirEspacios(arquivoLinhaAtual, sentinela, lookAhead);
 	
 	//erro não fechou aspas
 	} else {	
@@ -169,7 +169,7 @@ function tratarSemicolon (tabelaTokens, arquivoLinhaAtual, linhaAtual, sentinela
 	inserirTabelaTokens(tabelaTokens, idDelimitador, linhaAtual, sentinela.value, -1);
 	sentinela.value = lookAhead.value;
 	lookAhead.value = lookAhead.value + 1;
-	consumirEspacos(arquivoLinhaAtual, sentinela, lookAhead);
+	consumirEspacios(arquivoLinhaAtual, sentinela, lookAhead);
 }
 
 /***
@@ -194,7 +194,7 @@ function tratarOperadores (tabelaTokens, linhaDoArquivo, sentinela, lookAhead, l
 	inserirTabelaTokens(tabelaTokens, idDelimitador, linhaAtual, sentinela.value, -1);
 	sentinela.value = lookAhead.value;
 	lookAhead.value = lookAhead.value + 1;	
-	consumirEspacos(linhaDoArquivo, sentinela, lookAhead);
+	consumirEspacios(linhaDoArquivo, sentinela, lookAhead);
 }
 
 /***
@@ -232,7 +232,7 @@ function tratarNumero (tabelaTokens, tabelaConstantes, tabelaErrosLexicos, arqui
 		inserirTabelaTokens (tabelaTokens, -2, linhaAtual, sentinela.value, idLinha) ; // id token -> constante = -2
 		sentinela.value = lookAhead.value;
 		lookAhead.value = lookAhead.value + 1;	
-		consumirEspacos(arquivoLinhaAtual, sentinela, lookAhead);	
+		consumirEspacios(arquivoLinhaAtual, sentinela, lookAhead);	
 	} else {	
 		while (lookAhead.value < arquivoLinhaAtual.length) {
 			
