@@ -1,3 +1,6 @@
+
+
+
 /**
  * inicializa tablas de códigos intermedios para
   devuelto por el analizador léxico.
@@ -7,7 +10,8 @@
  * @param {*} tablaConstantes 
  * @param {*} tablaErroresLexicos 
  */
-function crearTablas(tablaIdentificadores, tablaTokens, tablaLiterales, tablaConstantes, 
+
+var crearTablas = function (tablaIdentificadores, tablaTokens, tablaLiterales, tablaConstantes, 
     tablaErroresLexicos) {
         var retorno = new Array();
     
@@ -47,7 +51,7 @@ function crearTablas(tablaIdentificadores, tablaTokens, tablaLiterales, tablaCon
   * @param {*} colunaCodigo columna del token en codigo
   * @param {*} ponteiro (puntero a la tabla auxiliar de referencia) == -1 si no hay tabla de referencia
   */
-function inserirTablaTokens(tablaTokens, idToken, lineaCodigo, colunaCodigo, ponteiro){
+var insertarEnTablaDeTokens = function (tablaTokens, idToken, lineaCodigo, colunaCodigo, ponteiro){
 	var idLinea = tablaTokens.length;
 	
 	tablaTokens[idLinea] = new Array();
@@ -66,7 +70,7 @@ function inserirTablaTokens(tablaTokens, idToken, lineaCodigo, colunaCodigo, pon
  * @param {*} lineaCodigo 
  * @param {*} colunaCodigo 
  */
-function inserirTablaLiterales(tablaLiterales, literal, lineaCodigo, colunaCodigo) {
+var insertarTablaLiterales= function (tablaLiterales, literal, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaLiterales.length;
 	
 	tablaLiterales[idLinea] = new Array();
@@ -85,7 +89,7 @@ function inserirTablaLiterales(tablaLiterales, literal, lineaCodigo, colunaCodig
  * @param {*} lineaCodigo 
  * @param {*} colunaCodigo 
  */
-function inserirTablaIdentificadores(tablaIdentificadores, nomeIdentificador, lineaCodigo, colunaCodigo) {
+var inserirTablaIdentificadores = function (tablaIdentificadores, nomeIdentificador, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaIdentificadores.length;
 	var variable = false;
 	var id;
@@ -118,7 +122,7 @@ function inserirTablaIdentificadores(tablaIdentificadores, nomeIdentificador, li
  * @param {*} lineaCodigo 
  * @param {*} colunaCodigo 
  */
-function inserirTablaConstantes(tablaConstantes, constante, lineaCodigo, colunaCodigo) {
+var inserirTablaConstantes = function inserirTablaConstantes(tablaConstantes, constante, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaConstantes.length;
 	tablaConstantes[idLinea] = new Array();
 	tablaConstantes[idLinea][0] = idLinea;
@@ -137,7 +141,7 @@ function inserirTablaConstantes(tablaConstantes, constante, lineaCodigo, colunaC
  * @param {*} lineaCodigo 
  * @param {*} colunaCodigo 
  */
-function inserirtablaErrores(tablaErrores, descripcionDelError, lineaCodigo, colunaCodigo) {
+var inserirtablaErrores= function (tablaErrores, descripcionDelError, lineaCodigo, colunaCodigo) {
 	var idLinea = tablaErrores.length;
 	tablaErrores[idLinea] = new Array();
 	tablaErrores[idLinea][0] = idLinea;
@@ -157,7 +161,7 @@ function inserirtablaErrores(tablaErrores, descripcionDelError, lineaCodigo, col
  * @param {*} tablaIdentificadores 
  * @param {*} tablaErroresLexicos 
  */
-function exibirTablas(tablaTokens, tablaConstantes, tablaLiterales, tablaIdentificadores, tablaErroresLexicos){
+var exibirTablas= function (tablaTokens, tablaConstantes, tablaLiterales, tablaIdentificadores, tablaErroresLexicos){
 	var mensaje = "";
 	var clase = "";
 	var div = "";
@@ -252,7 +256,7 @@ function exibirTablas(tablaTokens, tablaConstantes, tablaLiterales, tablaIdentif
 	results.classList.remove("ocultar-div");				
 }
 
-function exibirErroresSintaticos(){
+var exibirErroresSintaticos= function (){
 	var div = "";
 	div = div + "<table class='hoverable centered responsive-table'><thead><tr><th>id</th><th>Erro</th><th>Linea</th><th>Coluna</th></tr></thead><tbody>";
 	if (tablaErroresSintaticos.length > 0){
@@ -284,3 +288,6 @@ function exibirErroresSintaticos(){
 	spanErroresSintatico.innerHTML = tablaErroresSintaticos.length;	
 	spanErroresSintatico.classList.add(classe);
 }
+
+module.exports= crearTablas, insertarEnTablaDeTokens,insertarTablaLiterales,inserirTablaIdentificadores,
+ inserirTablaConstantes,inserirtablaErrores, exibirTablas, exibirErroresSintaticos;

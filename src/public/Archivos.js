@@ -37,24 +37,21 @@ function leerArchivo(evento) {
 	archivoSalidaDiv.innerHTML = div;
 	archivoSalidaDiv.classList.remove("ocultar-div");
 
-	// Limpar divs
-	var h5MessageElement = document.getElementById('tablaToken');
-	h5MessageElement.innerHTML = "";
+var URL = 'http://localhost:3000/evaluarContenido';
+	//peticion  al servidor
+	let mostrarResultados = document.getElementById('results-div');
+	axios.post(URL, 
+		{ archivo: archivo}
+	).then( function(response){
+		mostrarResultados.innerHTML = response.data.textoResultado;
+	}).catch(handleFailure);
+}
 
-	var h5MessageElement = document.getElementById('tablaConst');
-	h5MessageElement.innerHTML = "";
 
-	var h5MessageElement = document.getElementById('tablaLite');
-	h5MessageElement.innerHTML = "";
-
-	var h5MessageElement = document.getElementById('tablaVariables');
-	h5MessageElement.innerHTML = "";
-
-	var h5MessageElement = document.getElementById('tablaErroresLexicos');
-	h5MessageElement.innerHTML = "";
-
-	var h5MessageElement = document.getElementById('tablaErroresSintatico');
-	h5MessageElement.innerHTML = "";
-
-	main(archivo);
+/**
+ * Funcion que se encarga del manejo de los errores
+ * @param {*} data 
+ */
+function handleFailure(data) { 
+	console.log('error', data); 
 }
